@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30" status="info">
+	<Properties>
+		<Property name="logdir">${sys:catalina.base}/logs</Property>
+		<Property name="layout">%d{ISO8601} %5p %c{1}:%M - %m%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="stdout" target="SYSTEM_OUT">
+			<PatternLayout pattern="${layout}" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.apache.activemq" level="off"/>
+		<Root level="debug">
+			<AppenderRef ref="stdout" />
+		</Root>
+	</Loggers>
+
+</Configuration>

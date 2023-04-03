@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Se revisan configuraciones cada 30 segundos -->
+<Configuration monitorInterval="30" status="info">
+	<Properties>
+		<Property name="logdir">${sys:catalina.base}/logs</Property>
+		<Property name="layout">%d{ISO8601} %5p %c{1}:%M - %m%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="stdout" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{ISO8601} %5p %c{1}:%M - %m%n" />
+		</Console>
+		<RollingRandomAccessFile name="rollingfile"
+			immediateFlush="true" fileName="${logdir}/catalina.log"
+			filePattern="${logdir}/catalina-%d{MM-dd-yyyy}.log.zip">
+			<PatternLayout pattern="${layout}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete maxDepth="2" basePath="${logdir}"
+					testMode="false">
+					<IfFileName glob="*/*.log.zip">
+						<IfLastModified age="3d" />
+					</IfFileName>
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="error"/>
+		<Root level="info">
+			<AppenderRef ref="stdout" />
+			<AppenderRef ref="rollingfile" />
+		</Root>
+	</Loggers>
+
+</Configuration>

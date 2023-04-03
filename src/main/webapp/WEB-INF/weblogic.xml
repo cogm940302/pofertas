@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wls:weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/90" xmlns:wls="http://xmlns.oracle.com/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd">
+	<wls:weblogic-version>14.1.1.0</wls:weblogic-version>
+<container-descriptor>
+  <prefer-web-inf-classes>true</prefer-web-inf-classes>
+<!--   <prefer-application-packages> -->
+<!--     <package-name>org.apache.logging.log4j.*</package-name> -->
+<!--   </prefer-application-packages> -->
+</container-descriptor>
+</wls:weblogic-web-app>

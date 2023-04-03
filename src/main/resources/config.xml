@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<configuration>
+	<header>
+		<result>
+			<listDelimiterHandler
+				config-class="org.apache.commons.configuration2.convert.DefaultListDelimiterHandler">
+				<config-constrarg config-value="," />
+			</listDelimiterHandler>
+		</result>
+		<providers>
+			<provider config-tag="database"
+				config-class="com.mit.util.configuration.DatabaseConfigurationBuilderProvider" />
+		</providers>
+	</header>
+	<override>
+		<system />
+		<!-- <properties fileName="application.properties" -->
+		<!-- reloadingRefreshDelay="500" config-name="properties" -->
+		<!-- config-reload="true" config-optional="true" /> -->
+
+ 		<database table="POfer01_PROPERTIES" keyColumn="id_properties" 
+		valueColumn="cd_valor" autoCommit="false" 
+ 		driverClass="org.hsqldb.jdbcDriver" 
+ 		jdbcUrl="jdbc:hsqldb:mem:mitcua;ifexists=true;shutdown=false" password="" user="sa" 
+ 		config-optional="true" config-reload="true" 
+ 		reloadingRefreshDelay="2" timeUnit="SECONDS" /> 
+
+
+<!--		<database table="POfer01_PROPERTIES" keyColumn="id_properties"-->
+<!--			valueColumn="cd_valor" autoCommit="false"-->
+<!--			driverClass="oracle.jdbc.OracleDriver" jndi="java:comp/env/axapci"-->
+<!--			config-optional="true" config-reload="true"-->
+<!--			reloadingRefreshDelay="2" timeUnit="SECONDS" />-->
+
+<!-- 		reloadingRefreshDelay="500" config-reload="true" /> -->
+	</override>
+</configuration>
