@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
@@ -31,6 +32,9 @@ public class OnboardingController {
 
 	@Autowired
 	private OnboardingService onboardingService;
+	
+	@Resource
+	private org.apache.commons.configuration2.Configuration config;
 
 	@PostMapping(value = "/terms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Valid
@@ -51,6 +55,7 @@ public class OnboardingController {
 	@GetMapping(value = "/clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Valid
 	public List<Map<String, Object>> clientes() {
+		System.out.println(config.getString("hde.key.pub"));
 		List<Map<String, Object>> mapa = new ArrayList<>();
 		mapa = onboardingService.clientes();
 		return mapa;

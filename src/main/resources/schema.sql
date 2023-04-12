@@ -13,8 +13,13 @@ create table POfer01_PROPERTIES
 alter table POfer01_PROPERTIES
   add constraint PKAPG001_IDPROPERTIES primary key (ID_PROPERTIES);
   
-insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.company', '0002');
-insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.branch', '8710');  
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.data',	'62714ECA644813E0BC6F0728E763D8AF');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key',	'axapci');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.pass',	'axapcipass');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.pass.pub',	'anypassword');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.path.file',	'/Users/migueldelaconcha/Documents/home/link2b/server/data/axapg/certs/client/axapci.jks');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.path.file.pub',	'/Users/migueldelaconcha/Documents/home/link2b/server/data/axapg/certs/client/HDE_Auth_pub.jks');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.pub',	'HDE_Auth_pub');
   
  --------------------------------------------------------
 --  DDL for Table POfer02_CLIENT
