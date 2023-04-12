@@ -7,6 +7,19 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<distributionManagement>
+		<repository>
+			<id>nexus-site</id>
+			<url>http://172.30.106.57/nexus/content/repositories/releases</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-site</id>
+			<url>http://172.30.106.57/nexus/content/repositories/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<name>POfertas</name>
 	<url>http://maven.apache.org</url>
 
@@ -20,6 +33,21 @@
 
 	<dependencies>
 		<!-- Spring core & mvc -->
+<dependency>
+    <groupId>com.nimbusds</groupId>
+    <artifactId>nimbus-jose-jwt</artifactId>
+    <version>9.31</version>
+</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mit.crypto</groupId>
+			<artifactId>HDEClient</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>

@@ -32,8 +32,8 @@ public class OnboardingController {
 
 	@Autowired
 	private OnboardingService onboardingService;
-
-	@Resource
+	
+	@Autowired
 	private org.apache.commons.configuration2.Configuration config;
 
 

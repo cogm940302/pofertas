@@ -2,15 +2,15 @@
 
 <configuration>
 	<header>
-		<result>
-			<listDelimiterHandler
-				config-class="org.apache.commons.configuration2.convert.DefaultListDelimiterHandler">
-				<config-constrarg config-value="," />
-			</listDelimiterHandler>
-		</result>
+<!-- 		<result> -->
+<!-- 			<listDelimiterHandler -->
+<!-- 				config-class="org.apache.commons.configuration2.convert.DefaultListDelimiterHandler"> -->
+<!-- 				<config-constrarg config-value="," /> -->
+<!-- 			</listDelimiterHandler> -->
+<!-- 		</result> -->
 		<providers>
 			<provider config-tag="database"
-				config-class="com.mit.util.configuration.DatabaseConfigurationBuilderProvider" />
+				config-class="com.mit.commons.util.DatabaseConfigurationBuilderProvider" />
 		</providers>
 	</header>
 	<override>
@@ -22,7 +22,7 @@
  		<database table="POfer01_PROPERTIES" keyColumn="id_properties" 
 		valueColumn="cd_valor" autoCommit="false" 
  		driverClass="org.hsqldb.jdbcDriver" 
- 		jdbcUrl="jdbc:hsqldb:mem:mitcua;ifexists=true;shutdown=false" password="" user="sa" 
+ 		jdbcUrl="jdbc:hsqldb:mem:mitcua12;ifexists=true;shutdown=false" password="" user="sa" 
  		config-optional="true" config-reload="true" 
  		reloadingRefreshDelay="2" timeUnit="SECONDS" /> 
 
