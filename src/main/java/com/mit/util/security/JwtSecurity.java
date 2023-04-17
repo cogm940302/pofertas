@@ -8,6 +8,8 @@ import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyFactory;
@@ -19,7 +21,19 @@ import java.util.*;
 @Component
 public class JwtSecurity implements JwtSecured{
 
+    @Value("")
+    private Resource resource;
+
     private RSAPrivateKey privateKey;
+
+    private static final String PB =
+            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvMXB6O0ekIKYQP6TKTf6" +
+            "1Q0+Xef/BOLDSkcma7qZ7ZD05l3juzEcQDTiwJUbWsk/LZ7tt3JtejGofKK6imrr" +
+            "v2p7TVILwrn/JtSHPvDyB7UcKlD3gNgqTadfjcpgj0ATNLkPTHVWAfzy1CL1Ek7a" +
+            "fLu8fFzYlS1ndk42XHC5ql6CHRoZ/fQ/BPvsm6C27F+q+1wYY9hi/j1wHO9ZGFY2" +
+            "Zt09/66DxkMxfKaeNqXnifkbCWDvTRH4g6vQcBU2TuWyluGL4MCCWqqIrTc61nPc" +
+            "reLe6b1R8FZ8CR8qMcscquZY2PieIgg6mBLjy3u07pQKTUcqVW4MQ3Q4vwInUIVz" +
+            "vQIDAQAB";
 
     private static final JWEHeader HEADER = new JWEHeader(JWEAlgorithm.RSA_OAEP_256,EncryptionMethod.A128GCM);
 
@@ -36,15 +50,14 @@ public class JwtSecurity implements JwtSecured{
         try {
            Date date = new Date();
             JWTClaimsSet claims = new JWTClaimsSet.Builder()
-                    .claim("","")
+                    .claim("Tarjeta de credito",dataEncrypt.get("Tarjeta de credito"))
                     .notBeforeTime(date)
                     .expirationTime(new Date(date.getTime()+ 1000*60*60))
                     .jwtID(UUID.randomUUID().toString())
                     .issueTime(date)
                     .issuer("http://localhost:8080")
                     .build();
-            claims.getClaims().putAll(dataEncrypt);
-            byte[] decoded = Base64.getDecoder().decode(keyPublic);
+            byte[] decoded = Base64.getDecoder().decode(PB);
             X509EncodedKeySpec spec =
                     new X509EncodedKeySpec(decoded);
             RSAEncrypter encrypt = new RSAEncrypter((RSAPublicKey) KeyFactory

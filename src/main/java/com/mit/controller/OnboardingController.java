@@ -37,6 +37,8 @@ public class OnboardingController {
 	private org.apache.commons.configuration2.Configuration config;
 
 
+
+
 	@PostMapping(value = "/terms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Valid
 	public Map<String, Object> create(@Valid @RequestBody OnboardingInit data) {
