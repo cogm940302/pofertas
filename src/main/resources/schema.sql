@@ -20,7 +20,17 @@ insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.pass.p
 insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.path.file',	'/Users/migueldelaconcha/Documents/home/link2b/server/data/axapg/certs/client/axapci.jks');
 insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.path.file.pub',	'/Users/migueldelaconcha/Documents/home/link2b/server/data/axapg/certs/client/HDE_Auth_pub.jks');
 insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('hde.key.pub',	'HDE_Auth_pub');
-  
+
+------
+--MAIL DATA
+------
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.dir_email','/email');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.host','smtp.gmail.com');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.port','587');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.username','fernando.perez060198@gmail.com');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('wpp.password','ezmvblledhuparms');
+insert into POfer01_PROPERTIES (ID_PROPERTIES, CD_VALOR) values ('mail.username','fernando.perez060198@gmail.com');
+
  --------------------------------------------------------
 --  DDL for Table POfer02_CLIENT
 --------------------------------------------------------
