@@ -1,21 +1,15 @@
 package com.mit.util.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.RSAEncrypter;
+import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.shaded.gson.JsonObject;
-import com.nimbusds.jwt.EncryptedJWT;
-import com.nimbusds.jwt.JWTClaimsSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-
-import java.security.KeyFactory;
+import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.*;
 
 @Component
@@ -46,24 +40,46 @@ public class JwtSecurity implements JwtSecured{
 
     @Override
     public Optional<String> jwtGeneratorPlain(Map<String, Object> dataEncrypt, String keyPublic) {
-        EncryptedJWT jwt = null;
+        JWSObject jwt =  null;
         try {
            Date date = new Date();
-            JWTClaimsSet claims = new JWTClaimsSet.Builder()
+            JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.RS256).keyID("mit").build();
+            dataEncrypt.put("sub",1234);
+            dataEncrypt.put("aud","mittest");
+            dataEncrypt.put("exp",new Date(date.getTime()+ 1000*60*60));
+            dataEncrypt.put("iat",date.getTime());
+            dataEncrypt.put("iss","mittest");
+            Map<String,Object> otherData = new HashMap<>();
+            otherData.put("pan",dataEncrypt.get("pan"));
+            dataEncrypt.remove("pan");
+            dataEncrypt.put("other_data",otherData);
+             Payload payload = new Payload(dataEncrypt);
+            jwt=new JWSObject(header,payload);
+            KeyPairGenerator kpg = null;
+                kpg = KeyPairGenerator.getInstance("RSA");
+                kpg.initialize(2048);
+            JWSSigner signer = new RSASSASigner(kpg.generateKeyPair().getPrivate());
+            jwt.sign(signer);
+            System.out.println(jwt.serialize());
+
+           /*
+
+           JWTClaimsSet claims = new JWTClaimsSet.Builder()
                     .claim("Tarjeta de credito",dataEncrypt.get("Tarjeta de credito"))
                     .notBeforeTime(date)
                     .expirationTime(new Date(date.getTime()+ 1000*60*60))
                     .jwtID(UUID.randomUUID().toString())
                     .issueTime(date)
-                    .issuer("http://localhost:8080")
+                    .audience("")
+                    .jwtID("")
+                    .subject("")
+                    .issuer("http://localhost:8080")se
                     .build();
-            byte[] decoded = Base64.getDecoder().decode(PB);
-            X509EncodedKeySpec spec =
-                    new X509EncodedKeySpec(decoded);
+
             RSAEncrypter encrypt = new RSAEncrypter((RSAPublicKey) KeyFactory
                     .getInstance("RSA").generatePublic(spec));
             jwt = new EncryptedJWT(HEADER,claims);
-            jwt.encrypt(encrypt);
+            jwt.encrypt(encrypt);*/
         }catch (Exception ex){
             LOGGER.info(ex.getMessage(),ex);
         }

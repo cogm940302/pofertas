@@ -51,7 +51,7 @@ public class Main {
 		try {
 			JwtSecurity jwtSecurity = new JwtSecurity();
 			Map<String,Object> data = new HashMap<>();
-			data.put("Tarjeta de credito", "12345677890");
+			data.put("pan", cifrar("12345677890",PKCS1_PADDING));
 			Optional<String> jwt=jwtSecurity.jwtGeneratorPlain(data,"");
 			System.out.println(jwt);
 			KeyPairGenerator kpg = null;
