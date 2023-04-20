@@ -16,13 +16,13 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 @Configuration
 public class PersistenceConfig {
 
-	@Resource
-	private DataSource dataSource;
+//	@Resource
+//	private DataSource dataSource;
 
 	@Bean(name = "dataSource")
 	protected DataSource stubDataSource() {
 		System.out.println("************ ire por la BD");
-		DataSource ds = new EmbeddedDatabaseBuilder().setName("pofer").addScript("classpath:schema.sql")
+		DataSource ds = new EmbeddedDatabaseBuilder().setName("mitcua").addScript("classpath:schema.sql")
 				.build();
 		System.out.println("************ ya fui por la BD");
 		System.out.println(ds);
@@ -44,6 +44,6 @@ public class PersistenceConfig {
 	
 	@Bean
 	public JdbcTemplate jdbcTemplate(DataSource dataDource) {
-		return new JdbcTemplate(dataSource);
+		return new JdbcTemplate(stubDataSource());
 	}
 }
