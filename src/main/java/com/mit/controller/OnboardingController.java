@@ -33,7 +33,7 @@ public class OnboardingController {
 	@Autowired
 	private OnboardingService onboardingService;
 	
-	@Resource
+	@Autowired
 	private org.apache.commons.configuration2.Configuration config;
 
 	@PostMapping(value = "/terms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,7 +55,7 @@ public class OnboardingController {
 	@GetMapping(value = "/clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Valid
 	public List<Map<String, Object>> clientes() {
-		System.out.println(config.getString("hde.key.pub"));
+		System.out.println(config.getString("wpp.company"));
 		List<Map<String, Object>> mapa = new ArrayList<>();
 		mapa = onboardingService.clientes();
 		return mapa;
