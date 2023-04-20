@@ -43,11 +43,23 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.13</version>
 		</dependency>
-		<!--dependency>
+		<dependency>
+	<groupId>org.bouncycastle</groupId>
+	<artifactId>bcprov-jdk16</artifactId>
+	<version>1.38</version>
+</dependency>
+<dependency>
+	<groupId>org.bouncycastle</groupId>
+	<artifactId>bcpkix-jdk15on</artifactId>
+	<version>1.56</version>
+</dependency>
+<!-- Thanks for using https://jar-download.com -->
+
+		<dependency>
 			<groupId>com.mit.crypto</groupId>
 			<artifactId>HDEClient</artifactId>
 			<version>0.0.1</version>
-		</dependency-->
+		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
