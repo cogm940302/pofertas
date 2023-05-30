@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import java.io.IOException;
+
 
 @Configuration
 public class PropertiesConfig {
@@ -23,11 +25,11 @@ public class PropertiesConfig {
 	@Bean
 	@DependsOn("dataSource")
 //	@Lazy
-	public org.apache.commons.configuration2.Configuration config2() {
+	public org.apache.commons.configuration2.Configuration config2() throws IOException {
 		System.out.println("************+configuration");
 		HsmConfigurationDecoder decoder = new HsmConfigurationDecoder();
 		org.apache.commons.configuration2.Configuration config = ConfigurationLoader
-				.getInstance("./config.xml", decoder);
+				.getInstance("config.xml", decoder);
 		decoder.configure(config);
 		return config;
 	}

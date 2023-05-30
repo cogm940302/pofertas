@@ -41,6 +41,7 @@ public class OnboardingController {
 	public Map<String, Object> create(@Valid @RequestBody OnboardingInit data) {
 		log.info("Estos son los datos: {}" , data);
 		Map<String, Object> mapa = new HashMap<>();
+		config.getString("hde.key.pass.pub");
 		mapa = onboardingService.create(data);
 		return mapa;
 	}
