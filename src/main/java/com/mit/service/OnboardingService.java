@@ -5,10 +5,13 @@ import java.util.Map;
 
 import com.mit.commons.request.Client;
 import com.mit.commons.request.OnboardingInit;
+import com.mit.dto.request.ClientRequest;
+import com.mit.dto.response.ClientResponse;
+import com.mit.dto.response.OnboardinResponse;
 
 public interface OnboardingService {
 
-	Map<String, Object> create(OnboardingInit data);
-	Map<String, Object> accept(Client data);
-	List< Map<String, Object> > clientes();
+	OnboardinResponse create(OnboardingInit data);
+	void accept(String id, ClientRequest request);
+	List<ClientResponse> clientes();
 }

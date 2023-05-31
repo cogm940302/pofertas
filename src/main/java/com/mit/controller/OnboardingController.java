@@ -1,85 +1,52 @@
 package com.mit.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mit.dto.request.ClientRequest;
+import com.mit.dto.response.ClientResponse;
+import com.mit.dto.response.OnboardinResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.mit.commons.request.Client;
 import com.mit.commons.request.OnboardingInit;
 import com.mit.service.OnboardingService;
 
 @RestController
-@RequestMapping("/onboarding")
+@RequestMapping(value = "/onboarding")
 @Validated
+@Slf4j
 public class OnboardingController {
 
-	private static final Logger log = LogManager.getLogger(OnboardingController.class);
+	private final OnboardingService service;
 
-	@Autowired
-	private OnboardingService onboardingService;
-	
-	@Autowired
-	private org.apache.commons.configuration2.Configuration config;
+	public OnboardingController(OnboardingService service) {
+		this.service = service;
+	}
 
 	@PostMapping(value = "/terms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Valid
-	public Map<String, Object> create(@Valid @RequestBody OnboardingInit data) {
+	public ResponseEntity<OnboardinResponse> create(@Valid @RequestBody OnboardingInit data) {
 		log.info("Estos son los datos: {}" , data);
-		Map<String, Object> mapa = new HashMap<>();
-		config.getString("hde.key.pass.pub");
-		mapa = onboardingService.create(data);
-		return mapa;
+		return ResponseEntity.ok(this.service.create(data));
 	}
 
-	@PostMapping(value = "/accept", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@Valid
-	public Map<String, Object> accept(@Valid @RequestBody Client client) {
-		log.info("Estos son los datos: {}" , client);
-		return onboardingService.accept(client);
+	@PutMapping(value = "/accept/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Void> updatePOFER02Client(
+			@PathVariable String id,
+			@Valid @RequestBody ClientRequest request
+	) {
+		this.service.accept(id, request);
+		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping(value = "/clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@Valid
-	public List<Map<String, Object>> clientes() {
-		System.out.println(config.getString("wpp.company"));
-		List<Map<String, Object>> mapa = new ArrayList<>();
-		mapa = onboardingService.clientes();
-		return mapa;
+	@GetMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ClientResponse>> clientes() {
+		List<ClientResponse> clients = service.clientes();
+		return ResponseEntity.ok(clients);
 	}
-	
-//	@PostMapping(value = "/init", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@Valid
-//	public Map<String, Object> create2(@Valid @RequestBody Client datos) {
-//		System.out.println(datos);
-//		log.info("test del log");
-//		Map<String, Object> mapa = new HashMap<>();
-//		mapa.put("codigo", 200);
-//		mapa.put("message", "Todo bien");
-//		onboardingService.create(datos);
-//		return mapa;
-//	}
-	
-//	@GetMapping(value = "/terms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@Valid
-//	public Map<String, Object> terms() {
-//		Map<String, Object> mapa = new HashMap<>();
-//		mapa.put("codigo", 200);
-//		mapa.put("terms", "Estos son los terminos y condiciones");
-//		return mapa;
-//	}
 }

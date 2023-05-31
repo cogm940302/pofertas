@@ -1,19 +1,12 @@
 package com.mit.commons.request;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 
+@Data
 public class OnboardingInit {
 
 	@NotNull
 	private String idDevice;
-
-	public String getIdDevice() {
-		return idDevice;
-	}
-
-	public void setIdDevice(String idDevice) {
-		this.idDevice = idDevice;
-	}
-	
-	
 }

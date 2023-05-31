@@ -1,51 +1,86 @@
 package com.mit.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.mit.domain.POFER02Client;
+import com.mit.dto.request.ClientRequest;
+import com.mit.dto.response.ClientResponse;
+import com.mit.dto.response.OnboardinResponse;
+import com.mit.repository.IOnboardingRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
 
-import com.mit.commons.request.Client;
 import com.mit.commons.request.OnboardingInit;
-import com.mit.repository.OnboardingRepository;
 import com.mit.service.OnboardingService;
-import com.mit.util.exceptions.LogicException;
 
 @Service
+@Slf4j
 public class OnboardingServiceImp implements OnboardingService {
+	private final IOnboardingRepository repository;
+	private final ModelMapper modelMapper;
 
-	private static final Logger log = LogManager.getLogger(OnboardingServiceImp.class);
 	@Autowired
-	private OnboardingRepository onboardingRepository;
-	
-
-	@Override
-	public Map<String, Object> create(OnboardingInit data) {
-		Map<String, Object> response = onboardingRepository.createOrUpdateClient(data.getIdDevice());
-		return response;
+	public OnboardingServiceImp(
+			IOnboardingRepository repository,
+			ModelMapper modelMapper) {
+		this.repository = repository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public Map<String, Object> accept(Client client) {
-		Map<String, Object> response = new HashMap<String, Object>();
-		try {
-			onboardingRepository.accept(client);	
-		} catch (Exception e) {
-			
-			throw new LogicException("Error Saving Data", HttpStatus.INTERNAL_SERVER_ERROR);
+	public OnboardinResponse create(OnboardingInit data) {
+		POFER02Client entity;
+		OnboardinResponse response = new OnboardinResponse();
+		Optional<POFER02Client> optional = this.repository.findById(data.getIdDevice());
+
+		if (optional.isPresent()) {
+			entity = optional.get();
+			entity.setUpdateDate(new Date());
+			response.setTerms(entity.getTerms() == 1);
+		} else {
+			entity = new POFER02Client();
+			entity.setId(UUID.randomUUID().toString());
+			entity.setIdDevice(data.getIdDevice());
+			entity.setTerms(0);
+			entity.setCreationDate(new Date());
+			entity.setUpdateDate(new Date());
+			response.setTerms(Boolean.FALSE);
 		}
+		entity = this.repository.save(entity);
+		response.setKey(entity.getId());
 		return response;
 	}
 
 	@Override
-	public List<Map<String, Object>> clientes() {
-		return onboardingRepository.clientes();
+	public void accept(String id, ClientRequest request) {
+		Optional<POFER02Client> optionalClient = repository.findById(id);
+
+		if (optionalClient.isPresent()) {
+			POFER02Client client = optionalClient.get();
+			client.setVersion(request.getVersion());
+			client.setModel(request.getModel());
+			client.setBranch(request.getBranch());
+			client.setCompany(request.getCompany());
+			client.setUsername(request.getUsername());
+			client.setAfiliacion(request.getAfiliacion());
+			client.setTerms(1);
+			client.setUpdateDate(new Date());
+
+			repository.save(client);
+		} else {
+			throw new RuntimeException("POFER02Client not found with id: " + id); // TODO Implementar el Exception con ControlAdvidcer
+		}
 	}
 
+	@Override
+	public List<ClientResponse> clientes() {
+		List<POFER02Client> clients = repository.findAll();
+		return clients.stream()
+				.map(client -> modelMapper.map(client, ClientResponse.class))
+				.collect(Collectors.toList());
+	}
 
 }
