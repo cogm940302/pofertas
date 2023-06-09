@@ -1,5 +1,6 @@
 drop table POfer01_PROPERTIES if exists;
 drop table POfer02_CLIENT if exists;
+drop table POfer03_CLIENT if exists;
 
 create table POfer01_PROPERTIES
 (
@@ -27,3 +28,23 @@ create table POfer02_CLIENT
 
 alter table POfer02_CLIENT
     add constraint PK_APG002 primary key (cd_id);
+
+create table POfer03_CLIENT (
+    CD_ID                VARCHAR(50) NOT NULL,
+    CD_IDCLIENT          VARCHAR(50) NOT NULL ,
+    CD_BIN                        VARCHAR(9),
+    CD_MCC               VARCHAR(4) NOT NULL,
+    CD_SERVICE_INTELIPOS          INTEGER,
+    TX_MERCHANT                   VARCHAR(12),
+    TX_KEY               VARCHAR(200) NOT NULL,
+    TX_CODE                       VARCHAR(50),
+    TX_NAME                       VARCHAR(50),
+    NU_TOTAL_AMOUNT               INTEGER,
+    NU_NET_AMOUNT                 INTEGER,
+    ST_ACCEPTED                   INTEGER,
+    FH_CREATION                   DATE,
+    FH_UPDATE                     DATE
+);
+
+alter table POfer03_CLIENT
+    add constraint PK_APG003 primary key (CD_ID);
